@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99DA2F51164C0A370064AE3B /* NGAudioPlayerControlResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 99DA2F50164C0A370064AE3B /* NGAudioPlayerControlResponder.m */; };
 		9BDA4E2E159311810079ABE5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BDA4E2D159311810079ABE5 /* Foundation.framework */; };
 		9BDA4E33159311810079ABE5 /* NGAudioPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9BDA4E32159311810079ABE5 /* NGAudioPlayer.h */; };
 		9BDA4E35159311810079ABE5 /* NGAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDA4E34159311810079ABE5 /* NGAudioPlayer.m */; };
@@ -31,6 +32,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		99DA2F4F164C0A370064AE3B /* NGAudioPlayerControlResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NGAudioPlayerControlResponder.h; sourceTree = "<group>"; };
+		99DA2F50164C0A370064AE3B /* NGAudioPlayerControlResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NGAudioPlayerControlResponder.m; sourceTree = "<group>"; };
 		9BDA4E2A159311810079ABE5 /* libNGAudioPlayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNGAudioPlayer.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BDA4E2D159311810079ABE5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9BDA4E31159311810079ABE5 /* NGAudioPlayer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NGAudioPlayer-Prefix.pch"; sourceTree = "<group>"; };
@@ -98,6 +101,8 @@
 				9BDA4E5415931FC20079ABE5 /* NGAudioPlayerDelegate.h */,
 				9BDA4E55159320910079ABE5 /* NGAudioPlayerPlaybackState.h */,
 				9BDA4E56159320910079ABE5 /* NGAudioPlayerPlaybackState.m */,
+				99DA2F4F164C0A370064AE3B /* NGAudioPlayerControlResponder.h */,
+				99DA2F50164C0A370064AE3B /* NGAudioPlayerControlResponder.m */,
 				9BF38A42159DBBA0002B659F /* NSURL+NGAudioPlayerNowPlayingInfo.h */,
 				9BF38A43159DBBA0002B659F /* NSURL+NGAudioPlayerNowPlayingInfo.m */,
 				9BDA4E30159311810079ABE5 /* Supporting Files */,
@@ -168,6 +173,7 @@
 				9BDA4E35159311810079ABE5 /* NGAudioPlayer.m in Sources */,
 				9BDA4E57159320910079ABE5 /* NGAudioPlayerPlaybackState.m in Sources */,
 				9BF38A44159DBBA0002B659F /* NSURL+NGAudioPlayerNowPlayingInfo.m in Sources */,
+				99DA2F51164C0A370064AE3B /* NGAudioPlayerControlResponder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,6 +233,7 @@
 		9BDA4E39159311810079ABE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DSTROOT = /tmp/NGAudioPlayer.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NGAudioPlayer/NGAudioPlayer-Prefix.pch";
@@ -240,6 +247,7 @@
 		9BDA4E3A159311810079ABE5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DSTROOT = /tmp/NGAudioPlayer.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NGAudioPlayer/NGAudioPlayer-Prefix.pch";

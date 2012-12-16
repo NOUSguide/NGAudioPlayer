@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
+    NGAudioPlayerPlaybackStateReadyToPlay,
+    NGAudioPlayerPlaybackStateBuffering,
     NGAudioPlayerPlaybackStatePlaying,
-    NGAudioPlayerPlaybackStatePaused
+    NGAudioPlayerPlaybackStatePaused,
+    NGAudioPlayerPlaybackStateInitialized
 } NGAudioPlayerPlaybackState;
