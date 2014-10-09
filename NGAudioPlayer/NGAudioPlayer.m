@@ -351,7 +351,9 @@ static char currentItemStatusContext;
     
     // We only remove the first item with this URL (there should be a maximum of one)
     if (itemsWithURL.count > 0) {
-        [self.player removeItem:[itemsWithURL objectAtIndex:0]];
+        AVPlayerItem *item = [itemsWithURL objectAtIndex:0];
+        [item removeObserver:self forKeyPath:kNGAudioPlayerKeypathCurrentItemStatus];
+        [self.player removeItem:item];
         
         return YES;
     }
@@ -360,6 +362,9 @@ static char currentItemStatusContext;
 }
 
 - (void)removeAllURLs {
+    for (AVPlayerItem *item in _player.items) {
+        [item removeObserver:self forKeyPath:kNGAudioPlayerKeypathCurrentItemStatus];
+    }
     [self.player removeAllItems];
 }
 
