@@ -104,6 +104,7 @@ static char currentItemStatusContext;
 }
 
 - (void)dealloc {
+    [self removeAllURLs];
     [_player removeObserver:self forKeyPath:kNGAudioPlayerKeypathRate];
     [_player removeObserver:self forKeyPath:kNGAudioPlayerKeypathStatus];
     [_player removeObserver:self forKeyPath:kNGAudioPlayerKeypathCurrentItem];
@@ -430,6 +431,7 @@ static char currentItemStatusContext;
     
     if (newStatus == AVPlayerStatusFailed) {
         if (_delegateFlags.didFail) {
+            [self removeAllURLs];
             [self.delegate audioPlayer:self didFailForURL:self.currentPlayingURL];
         }
     }
@@ -476,21 +478,43 @@ static char currentItemStatusContext;
 }
 
 - (void)handleCurrentItemStatusChange:(NSDictionary *)change {
-    //    AVPlayerItemStatus old = (AVPlayerItemStatus)[[change valueForKey:NSKeyValueChangeOldKey] intValue];
-    //    AVPlayerItemStatus new = (AVPlayerItemStatus)[[change valueForKey:NSKeyValueChangeNewKey] intValue];
+    AVPlayerItemStatus new = (AVPlayerItemStatus)[[change valueForKey:NSKeyValueChangeNewKey] intValue];
     //    NSLog(@"oldStatus: %i, newStatus: %i", old, new);
     
     if (_delegateFlags.didChangePlaybackState) {
         [self.delegate audioPlayerDidChangePlaybackState:self.playbackState];
-        //        if (new == AVPlayerStatusUnknown) {
-        //            [self.delegate audioPlayerDidChangePlaybackState:self.playbackState];
-        //        }
-        //        else if (new == AVPlayerStatusReadyToPlay) {
-        //            [self.delegate audioPlayerDidChangePlaybackState:self.playbackState];
-        //        }
-        //        else {
-        //            [self.delegate audioPlayerDidChangePlaybackState:self.playbackState];
-        //        }
+    }
+    
+    if (new == AVPlayerItemStatusFailed) {
+        AVPlayerItem *item = self.player.currentItem;
+        if (item.error != nil) {
+//            NSLog(@"item error: %@", item.error);
+            
+            //workaround for iOS8
+            NSMutableArray *urls = [NSMutableArray array];
+            for (AVPlayerItem *i in _player.items) {
+                NSURL *url = [self URLOfItem:i];
+                [urls addObject:url];
+                
+                [item removeObserver:self forKeyPath:kNGAudioPlayerKeypathCurrentItemStatus];
+            }
+            
+            [self.player removeAllItems];
+            [_player removeObserver:self forKeyPath:kNGAudioPlayerKeypathRate];
+            [_player removeObserver:self forKeyPath:kNGAudioPlayerKeypathStatus];
+            [_player removeObserver:self forKeyPath:kNGAudioPlayerKeypathCurrentItem];
+            self.player = nil;
+            
+            self.player = [[AVQueuePlayer alloc] init];
+            [_player addObserver:self forKeyPath:kNGAudioPlayerKeypathRate options:NSKeyValueObservingOptionNew context:&rateContext];
+            [_player addObserver:self forKeyPath:kNGAudioPlayerKeypathStatus options:NSKeyValueObservingOptionNew context:&statusContext];
+            [_player addObserver:self forKeyPath:kNGAudioPlayerKeypathCurrentItem options:NSKeyValueObservingOptionNew context:&currentItemContext];
+            
+            //re-add all urls
+            [self enqueueURLs:urls];
+            
+            [self.player play];
+        }
     }
 }
 
